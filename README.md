@@ -1,12 +1,12 @@
 # Predict IPP (Individual Pension Plan) Contribution
 
-A submission for [Türkiye İş Bankası Machine Learning Challenge #2](https://www.kaggle.com/c/ml-challenge-turkiye-is-bankasi-2/overview).
+A submission for [Garanti BBVA Teknoloji Data Science Challenge](https://www.kaggle.com/c/onlinedatasciencechallenge/).
 
 **team:** Puffing Billy   
 **members:** [@mustafahakkoz](https://github.com/mustafahakkoz)  [@Aysenuryilmazz](https://github.com/Aysenuryilmazz)  
 **rank:** 24/72    
 **score (RMSE):** 11940.12    
-**dataset:** [Garanti IPP](https://www.kaggle.com/c/onlinedatasciencechallenge/data) A realistic dataset to determine the potential customers of **Individial Pension Plan (IPP)** and the possible amount that each one will be willing to pay as the additional contribution. Using external features are encouraged such as inflation data, salary payment days, exchange rates, seasonal temperature ...
+**dataset:** [Garanti IPP](https://www.kaggle.com/c/onlinedatasciencechallenge/data) A realistic dataset to determine the potential customers of **Individial Pension Plan (IPP)** and the possible amount that each one will be willing to pay as the additional contribution. Using external data is encouraged such as inflation data, salary payment days, exchange rates, seasonal temperature ...
 
 - training dataset ( 32.38 MB, 174K rows, 40 cols)
 
@@ -20,87 +20,41 @@ Implementation details can be found in notebooks.
 
 1. [EDA and preprocessing](https://www.kaggle.com/hakkoz/garanti-eda-preprocessing)
 
-2. a. [BayesianOptimization with XGBoost](https://www.kaggle.com/hakkoz/garanti-bayesianoptimization-xgboost)
-   b. [BayesianOptimization with XGBoost and Out-of-Fold (OOF) predictions](https://www.kaggle.com/areukolateamleader/garanti-bayesianoptimization-xgboost-oofpreds)
+2. a. [BayesianOptimization with XGBoost](https://www.kaggle.com/hakkoz/garanti-bayesianoptimization-xgboost)  
+   b. [BayesianOptimization with XGBoost and Out-of-Fold (OOF) predictions](https://www.kaggle.com/areukolateamleader/garanti-bayesianoptimization-xgboost-oofpreds)  
    c. [RandomGrid with XGBoost and Out-of-Fold (OOF) predictions](https://www.kaggle.com/hakkoz/garanti-randomgrid-xgboost-oofpreds)
 
 ---
 
 #### Repo Content and Implementation Steps:
 
-[**1.a.isbankasi-eda-preprocessing.ipynb**](https://github.com/mustafahakkoz/Predict_Transaction_Amount/blob/main/1.a.isbankasi-eda-preprocessing.ipynb)
+[**1.garanti-eda-preprocessing.ipynb**](https://github.com/mustafahakkoz/Predict_IPP_Contribution/blob/main/1.garanti-eda-preprocessing.ipynb)
 
-- Binning ordinal columns by KBinsDiscretizer
+- Handling missing data with IterativeImputer.
 
-- Creating new features by 1-level groups
+- Testing default XGBoost model with LabelEncoder, OneHotEncoder and QuantileTransformer.
 
-- Creating new features by 2-level groups
+[**2.a.garanti-bayesianoptimization-xgboost.ipynb**](https://github.com/mustafahakkoz/Predict_IPP_Contribution/blob/main/2.a.garanti-bayesianoptimization-xgboost.ipynb)
 
-- Filling NaN values by means of each group
+-  Bayesian optimization for tuning XGBoost on one hot encoded data.
 
-- Handling date column and creating new features by seasonal, yearly and monthly groups
+[**2.b.garanti-bayesianoptimization-xgboost-oofpreds.ipynb**](https://github.com/mustafahakkoz/Predict_IPP_Contribution/blob/main/2.b.garanti-bayesianoptimization-xgboost-oofpreds.ipynb)
 
-- Mining external data such as economic indicators (17 cols) and exchange rates (2 cols).
+- Expanded search space of **Bayesian optimization** for tuning XGBoost.
+- Straight and OOF (Out-of-Fold) predictions.
+- Analyzing predictions and feature importances.
 
-- TargetEncoding for categorical columns
+[**2.c.garanti-randomgrid-xgboost-oofpreds.ipynb**](https://github.com/mustafahakkoz/Predict_IPP_Contribution/blob/main/2.c.garanti-randomgrid-xgboost-oofpreds.ipynb)
 
-- MinMaxScaler for normalization
-
-- Feature elimination by pearson correlation (52 -> 44)
-
-- Feature elimination by PCA on external data columns (17+2 -> 3)
-
-- Analyzing data by [pps (predictive power score)](https://github.com/8080labs/ppscore)
-
-[**1.b.isbankasi-eda-preprocess-noscaling.ipynb**](https://github.com/mustafahakkoz/Predict_Transaction_Amount/blob/main/1.b.isbankasi-eda-preprocess-noscaling.ipynb)
-
-- An alternative preprocessing without scaling data.
-
-[**1.c.isbankasi-eda-preprocess-noscaling-noelimination.ipynb**](https://github.com/mustafahakkoz/Predict_Transaction_Amount/blob/main/1.c.isbankasi-eda-preprocess-noscaling-noelimination.ipynb)
-
-- An alternative preprocessing without scaling and feature elimination.
-
-[**2.a.isbankasi-overfit-xgboost.ipynb**](https://github.com/mustafahakkoz/Predict_Transaction_Amount/blob/main/2.a.isbankasi-overfit-xgboost.ipynb)
-
-- Overfitting an xgboost model for testing capabilities of preprocessing step.
-
-[**2.b.isbankasi-overfit-catboost.ipynb**](https://github.com/mustafahakkoz/Predict_Transaction_Amount/blob/main/2.b.isbankasi-overfit-catboost.ipynb)
-
-- Overfitting an catboost model for testing capabilities of preprocessing step.
-
-[**3.a.isbankasi-randomizedsearch-xgboost.ipynb**](https://github.com/mustafahakkoz/Predict_Transaction_Amount/blob/main/3.a.isbankasi-randomizedsearch-xgboost.ipynb)
-
-- Randomized search for tuning small search space of XGBoost's hyperparameters.
-
-[**3.b.isbankasi-randomizedsearch-catboost.ipynb**](https://github.com/mustafahakkoz/Predict_Transaction_Amount/blob/main/3.b.isbankasi-randomizedsearch-catboost.ipynb)
-
-- Randomized search for tuning small search space of CatBoost's hyperparameters.
-
-[**3.c.isbankasi-randomizedsearch-xgboost-expanded.ipynb**](https://github.com/mustafahakkoz/Predict_Transaction_Amount/blob/main/3.c.isbankasi-randomizedsearch-xgboost-expanded.ipynb)
-
-- Expanded search space version of Randomizedsearch of XGBoost.
-
-[**3.d.isbankasi-randomizedsearch-catboost-expanded.ipynb**](https://github.com/mustafahakkoz/Predict_Transaction_Amount/blob/main/3.d.isbankasi-randomizedsearch-catboost-expanded.ipynb)
-
-- Expanded search space version of Randomizedsearch of CatBoost.
-
-[**3.e.isbankasi-randomizedsearch-lightgbm-expanded.ipynb**](https://github.com/mustafahakkoz/Predict_Transaction_Amount/blob/main/3.e.isbankasi-randomizedsearch-lightgbm-expanded.ipynb)
-
-- Expanded search space version of Randomizedsearch of LightGBM.
-
-[**4.a.isbankasi-bayesianoptimization-xgboost.ipynb**](https://github.com/mustafahakkoz/Predict_Transaction_Amount/blob/main/4.a.isbankasi-bayesianoptimization-xgboost.ipynb)
-
-- Bayesian optimization for tuning XGBoost.
-
-[**4.b.isbankasi-bayesianoptimization-xgboost-expanded.ipynb**](https://github.com/mustafahakkoz/Predict_Transaction_Amount/blob/main/4.b.isbankasi-bayesianoptimization-xgboost-expanded.ipynb)
-
-- Expanded search space version of BayesianOptimization of XGBoost.
+- Expanded search space of **RandomGrid** for tuning XGBoost.
+- Straight and OOF (Out-of-Fold) predictions.
+- Analyzing predictions and feature importances.
 
 ---
 
 #### Notes:
 
-- We didin't use extra test dataset or cv to evaluate our experiments so it causes us not to diversify our experiments.
+- We didin't use external data, it could have been beneficial.
 
 - We focused on tuning models. Instead, we could have implement more extensive preprocessing (creating more features, more data mining, advanced null handling, more feature elimination etc.) to improve our scores.
 
